@@ -1,103 +1,99 @@
 #include "../include/compiler.h"
 
-int is_quotation_mark(char c) {
-    return (c == '"');
-}
-
-char *replace_word(char *str, const char *old_word, const char *new_word)
-{    
-    t_replace r;
-
-    r.len_old = strlen(old_word);
-    r.len_new = strlen(new_word);
-    r.count = 0;
-    r.ins = str;
-    while ((r.ins = strstr(r.ins, old_word))) {
-        r.before = r.ins - 1;
-        r.after = r.ins + r.len_old;
-        if ((r.before >= str && is_quotation_mark(*r.before)) || (r.after && is_quotation_mark(*r.after))) {
-            r.ins += r.len_old;
-            continue ;
-        }
-        r.count++;
-        r.ins += r.len_old;
-    }
-    if (r.count == 0)
-        return str;
-    r.result = malloc(strlen(str) + (r.len_new - r.len_old) * r.count + 1);
-    if (!r.result)
-        return NULL;
-    r.temp = r.result;
-    r.ins = str;
-    while (r.count--)
-    {
-        r.occurrence = strstr(r.ins, old_word);
-        r.len_front = r.occurrence - r.ins;
-        r.temp = strncpy(r.temp, r.ins, r.len_front) + r.len_front;
-        r.before = r.occurrence - 1;
-        r.after = r.occurrence + r.len_old;
-        if (!(r.before >= str && is_quotation_mark(*r.before)) && !(r.after && is_quotation_mark(*r.after)))
-            r.temp = strcpy(r.temp, new_word) + r.len_new;
-        else
-            r.temp = strncpy(r.temp, r.occurrence, r.len_old) + r.len_old;
-        r.ins = r.occurrence + r.len_old;
-    }
-    strcpy(r.temp, r.ins);
-    return (r.result);
-}
-
-char *change_line(char *line)
+char *create_cmd(char *file_name)
 {
-    char *mdf_line;
+    char *cmd;
 
-    mdf_line = replace_loop(line);
-    if (!line)
-        return (NULL);
-    mdf_line = replace_define(mdf_line);
-    if (!mdf_line)
-        return (NULL);
-    mdf_line = replace_function(mdf_line);
-    if (!mdf_line)
-        return (NULL);
-    mdf_line = replace_terms(mdf_line);
-    if (!mdf_line)
-        return (NULL);
-    mdf_line = replace_var(mdf_line);
-    return (mdf_line);
-}
-
-void compile(char *file_name, t_line *start)
-{
-    int fd;
-    t_line *current;
-    char *mdf_line;
-
-    fd = open(file_name, O_WRONLY, 0777);
-    if (fd == -1)
+    cmd = my_strjoin(CC, file_name);
+    if (!cmd)
     {
-        free_lst(&start);
+        perror("malloc erorr");
         unlink(file_name);
         free(file_name);
-        close(fd);
-        perror("open error");
         exit(EXIT_FAILURE);
     }
-    current = start;
-    while (current)
+    cmd = my_strjoin(cmd, OUTPUT);
+    if (!cmd)
     {
-        mdf_line = change_line(current->line);
-        if (!mdf_line)
-        {
-            perror("malloc error");
-            free_lst(&start);
-            unlink(file_name);
-            free(file_name);
-            close(fd);
-            exit(EXIT_FAILURE);
-        }
-        write(fd, mdf_line, strlen(mdf_line));
-        // free(mdf_linme);
-        current = current->next;
+        perror("malloc error");
+        unlink(file_name);
+        free(file_name);
+        exit(EXIT_FAILURE);
     }
-    close(fd);
+    return (cmd);
+}
+
+char	*my_getenv(char *search, char **env)
+{
+	int	i;
+	int	len;
+
+	i = -1;
+	len = strlen(search);
+	while (env[++i])
+	{
+		if (strncmp(env[i], search, len) == 0 && env[i][len] == '=')
+			return (env[i] + (len + 1));
+	}
+	return (NULL);
+}
+
+char	*find_path(char *cmd, char **env)
+{
+	char	*path;
+	char	**s_path;
+	char	*cmd_path;
+	char	*temp;
+	int		i;
+
+	path = my_getenv("PATH", env);
+	s_path = my_split(path, ':');
+	i = -1;
+	while (s_path[++i])
+	{
+		temp = my_strjoin(s_path[i], "/");
+		cmd_path = my_strjoin(temp, cmd);
+		free(temp);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+		{
+			free_splitted(s_path);
+			return (cmd_path);
+		}
+		free(cmd_path);
+	}
+	free_splitted(s_path);
+	return (NULL);
+}
+
+void compile(char *file_name, char **env)
+{
+    char *cmd;
+    char *path;
+    char **s_cmd;
+    pid_t pid;
+
+    cmd = create_cmd(file_name);
+    s_cmd = my_split(cmd, ' ');
+    path = find_path(s_cmd[0], env);
+    if (!path)
+    {
+        perror("error compiler");
+        unlink(file_name);
+        free(file_name);
+        free(cmd);
+        free_splitted(s_cmd);
+        exit(EXIT_FAILURE);
+    }
+    pid = fork();
+    if (pid == 0)
+    {
+        free(file_name);
+        execve(path, s_cmd, env);
+        free_splitted(s_cmd);
+        free(path);
+        free(cmd);
+    }
+    free(cmd);
+    free(path);
+    free_splitted(s_cmd);
 }

@@ -29,7 +29,7 @@ ____________________________________________
     }
 - **Do loop | boucle do** :
     ```mylang
-    do {
+    faire {
         //instructions;
     } tant que (i < 10)
 ## Terms | conditions
@@ -48,10 +48,13 @@ ____________________________________________
     sinon {
         // instructions;
     }
-## Define
+## Define and include
 - **#define** :
     ```mylang
     #definir //name //value
+- **include** :
+    ```mylang
+    #inclure <//header>
 ## Return
 - **return** :
     ```mylang
@@ -67,6 +70,8 @@ ____________________________________________
 ## Exemple
 - **for my language | pour mon langage** :
     ```mylang
+    #inclure <stdio.h>
+
     nombre main(nombre argc, char **argv)
     {
         nombre i;
@@ -74,13 +79,15 @@ ____________________________________________
         i = 0;
         tant que (i <= 20)
         {
-            afficher("%s for the %d's time !", hw, i):
+            afficher("%s for the %d's time !\n", hw, i);
             i++;
         }
         retourner (0);
     }
 - **In C | En C** :
     ```c
+    #include <stdio.h>
+
     int main(int argc, char **argv)
     {
         int i;
@@ -88,7 +95,7 @@ ____________________________________________
         i = 0;
         while (i <= 20)
         {
-            printf("%s for the %d's time !", hw, i):
+            printf("%s for the %d's time !\n", hw, i):
             i++;
         }
         return (0);

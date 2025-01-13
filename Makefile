@@ -1,4 +1,4 @@
-NAME = mylang
+NAME = myCompiler
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
@@ -9,7 +9,9 @@ SRCS = exec/main.c \
 		exec/Lexer/src/parser.c \
 		exec/temp/src/tmp.c \
 		exec/Compiler/src/compiler.c \
-		exec/Compiler/src/replace.c
+		exec/Compiler/src/replace.c \
+		exec/Compiler/src/trad.c \
+		exec/Compiler/src/my_split.c
 
 OBJS = $(SRCS:.c=.o)
 

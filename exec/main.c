@@ -1,6 +1,6 @@
 #include "main.h"
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
 	t_line *start;
 	char *temp_name;
@@ -12,8 +12,9 @@ int main(int argc, char **argv)
 	}
 	start = parser(argv[1]);
 	temp_name = create_temp_file();
-	compile(temp_name, start);
+	trad(temp_name, start);
+	free_lst(&start);
+	compile(temp_name, env);
 	unlink(temp_name);
 	free(temp_name);
-	free_lst(&start);
 }

@@ -7,6 +7,9 @@ char *replace_loop(char *line)
     mdf_line = replace_word(line, "tant que", "while");
     if (!mdf_line)
         return (NULL);
+    mdf_line = replace_word(mdf_line, "faire", "do");
+    if (!mdf_line)
+        return (NULL);
     mdf_line = replace_word(mdf_line, "pour", "for");
     return (mdf_line);
 }
@@ -47,6 +50,9 @@ char *replace_define(char *line)
     char *mdf_line;
 
     mdf_line = replace_word(line, "definir", "define");
+    if (!mdf_line)
+        return (NULL);
+    mdf_line = replace_word(mdf_line, "inclure", "include");
     if (!mdf_line)
         return (NULL);
     mdf_line = replace_word(mdf_line, "retourner", "return");

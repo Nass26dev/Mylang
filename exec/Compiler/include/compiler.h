@@ -6,6 +6,16 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <stdbool.h>
+#include <sys/wait.h>
+
+# ifndef CC
+#  define CC "cc "
+# endif
+
+# ifndef OUTPUT
+#  define OUTPUT " -o mylang"
+# endif
 
 typedef struct s_line
 {
@@ -35,5 +45,8 @@ char *replace_terms(char *line);
 char *replace_var(char *line);
 char *replace_define(char *line);
 char *replace_function(char *line);
+void	free_splitted(char **splitted);
+char	**my_split(const char *s, char c);
+char *my_strjoin(char *s1, char *s2);
 
 #endif
