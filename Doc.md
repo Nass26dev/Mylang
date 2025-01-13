@@ -2,10 +2,10 @@
 This project consists of creating my own programming language in French which is my native language.  
 This language will be based on the syntax of C, it will therefore be an imperative and procedural language like C.
 ## Types of variables
--`nb` : Integer.  
--`chaine` : String.  
--`char` : char.  
--`bool` : boolean.  
+-`nombre` : Integer. | nombre age = 19  
+-`chaine` : String. | chaine name = "Nass"  
+-`char` : char. | char letter = 'a'  
+-`bool` : boolean. | bool true = vrai | bool false = faux  
 
 ## Loop
 - **While loop** :
