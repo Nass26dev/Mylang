@@ -83,7 +83,6 @@ void compile(char *file_name, t_line *start)
         exit(EXIT_FAILURE);
     }
     current = start;
-
     while (current)
     {
         mdf_line = change_line(current->line);
@@ -97,7 +96,7 @@ void compile(char *file_name, t_line *start)
             exit(EXIT_FAILURE);
         }
         write(fd, mdf_line, strlen(mdf_line));
-        free(mdf_line);
+        // free(mdf_linme);
         current = current->next;
     }
     close(fd);
