@@ -1,36 +1,39 @@
 # Documentation of my programming language
-
+This project consists of creating my own programming language in French which is my native language
 ## Types of variables
 -`nb` : Integer.  
 -`chaine` : String.  
 -`char` : char.  
 -`bool` : boolean.  
 
-## loop
-- **while loop** :
+## Loop
+- **While loop** :
     ```mylang
     tant que (i != 12) {
         // instructions
     }
-- **for loop** :
+- **For loop** :
     ```mylang
     pour (i = 0, i <= 20, i++) {
         // instructions
     }
-
-## terms
-- **if** :
+## Terms
+- **If** :
     ```mylang
     si (i < 10) {
         // instructions
     }
-- **elif/else if** :
+- **Elif/Else if** :
     ```mylang
     sinon si (i == 10) {
         // instructions
     }
-- **else** :
+- **Else** :
     ```mylang
     sinon {
         // instructions
     }
+## Define
+- **#define** :
+    ```mylang
+    #definir //name //value
