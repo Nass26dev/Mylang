@@ -1,5 +1,6 @@
 # Documentation of my programming language
-This project consists of creating my own programming language in French which is my native language
+This project consists of creating my own programming language in French which is my native language.  
+This language will be based on the syntax of C, it will therefore be an imperative and procedural language like C.
 ## Types of variables
 -`nb` : Integer.  
 -`chaine` : String.  
