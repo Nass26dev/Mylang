@@ -2,7 +2,7 @@
 
 void add_node_error(t_line *start, char *line)
 {
-    free_lst(start);
+    free_lst(&start);
     free(line);
     perror("malloc error");
     exit(EXIT_FAILURE);
@@ -30,12 +30,12 @@ void add_node(t_line **start, char *line)
     }
 }
 
-void free_lst(t_line *start)
+void free_lst(t_line **start)
 {
     t_line *current;
     t_line *next;
 
-    current = start;
+    current = *start;
     while (current)
     {
         next = current->next;

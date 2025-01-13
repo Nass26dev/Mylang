@@ -17,18 +17,16 @@ char *replace_word(char *str, const char *old_word, const char *new_word)
         r.after = r.ins + r.len_old;
         if ((r.before >= str && is_quotation_mark(*r.before)) || (r.after && is_quotation_mark(*r.after))) {
             r.ins += r.len_old;
-            continue;
+            continue ;
         }
         r.count++;
         r.ins += r.len_old;
     }
-    if (r.count == 0) {
+    if (r.count == 0)
         return str;
-    }
     r.result = malloc(strlen(str) + (r.len_new - r.len_old) * r.count + 1);
-    if (!r.result) {
+    if (!r.result)
         return NULL;
-    }
     r.temp = r.result;
     r.ins = str;
     while (r.count--)
@@ -50,20 +48,22 @@ char *replace_word(char *str, const char *old_word, const char *new_word)
 
 char *change_line(char *line)
 {
-    line = replace_loop(line);
+    char *mdf_line;
+
+    mdf_line = replace_loop(line);
     if (!line)
         return (NULL);
-    line = replace_define(line);
-    if (!line)
+    mdf_line = replace_define(mdf_line);
+    if (!mdf_line)
         return (NULL);
-    line = replace_function(line);
-    if (!line)
+    mdf_line = replace_function(mdf_line);
+    if (!mdf_line)
         return (NULL);
-    line = replace_terms(line);
-    if (!line)
+    mdf_line = replace_terms(mdf_line);
+    if (!mdf_line)
         return (NULL);
-    line = replace_var(line);
-    return (line);
+    mdf_line = replace_var(mdf_line);
+    return (mdf_line);
 }
 
 void compile(char *file_name, t_line *start)
@@ -75,7 +75,7 @@ void compile(char *file_name, t_line *start)
     fd = open(file_name, O_WRONLY, 0777);
     if (fd == -1)
     {
-        free_lst(start);
+        free_lst(&start);
         unlink(file_name);
         free(file_name);
         close(fd);
@@ -83,13 +83,14 @@ void compile(char *file_name, t_line *start)
         exit(EXIT_FAILURE);
     }
     current = start;
+
     while (current)
     {
         mdf_line = change_line(current->line);
         if (!mdf_line)
         {
             perror("malloc error");
-            free_lst(start);
+            free_lst(&start);
             unlink(file_name);
             free(file_name);
             close(fd);

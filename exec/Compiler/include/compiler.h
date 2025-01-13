@@ -28,7 +28,7 @@ typedef struct s_replace
     char *occurrence;
 }t_replace;
 
-void free_lst(t_line *start);
+void free_lst(t_line **start);
 char *replace_word(char *str, const char *old_word, const char *new_word);
 char *replace_loop(char *line);
 char *replace_terms(char *line);

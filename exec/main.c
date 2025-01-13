@@ -12,9 +12,8 @@ int main(int argc, char **argv)
 	}
 	start = parser(argv[1]);
 	temp_name = create_temp_file();
-	printf("temp name = %s\n", temp_name);
 	compile(temp_name, start);
 	unlink(temp_name);
 	free(temp_name);
-	free_lst(start);
+	free_lst(&start);
 }
