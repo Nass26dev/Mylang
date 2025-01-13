@@ -13,9 +13,8 @@ ________________________________________________________________________________
     Cela signifie également que mon langage est de bas niveau et gère également les pointeurs et tous les avantages du C.
 
 ## Types of variables | types de variables
--`nombre` : Integer. | `nombre age = 19;`
--`char` : char. | `char letter = 'a';`  
--`bool` : boolean. | `bool true = vrai;` | `bool false = faux;`  
+-`nombre` : Integer. | `nombre age = 19;`  
+-`car` : char. | `car letter = 'a';`  
 
 ## Loop | boucle
 - **While loop | boucle while** :
@@ -34,7 +33,7 @@ ________________________________________________________________________________
     si (i < 10) {
         // instructions;
     }
-- **Elif/Else if** :
+- **Else if** :
     ```mylang
     sinon si (i == 10) {
         // instructions;
@@ -66,7 +65,7 @@ ________________________________________________________________________________
     nombre main(nombre argc, char **argv)
     {
         nombre i;
-        chaine hw[13] = "Hello World !";
+        car hw[13] = "Hello World !";
 
         i = 0;
         tant que (i <= 20)
