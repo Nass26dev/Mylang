@@ -15,7 +15,10 @@ ________________________________________________________________________________
 ## Types of variables | types de variables
 -`nombre` : Integer. | `nombre age = 19;`  
 -`car` : char. | `car letter = 'a';`  
+-`flottant` : float | `flottant nb = 2.10;`
+____________________________________________
 
+-`statique` : static | `statique nombre;`
 ## Loop | boucle
 - **While loop | boucle while** :
     ```mylang
