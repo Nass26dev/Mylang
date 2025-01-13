@@ -30,6 +30,11 @@ ____________________________________________
     pour (i = 0, i <= 20, i++) {
         // instructions;
     }
+- **Do loop | boucle do** :
+    ```mylang
+    do {
+        //instructions;
+    } tant que (i < 10)
 ## Terms | conditions
 - **If** :
     ```mylang
